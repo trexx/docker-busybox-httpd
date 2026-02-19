@@ -1,0 +1,17 @@
+name: 'Trivy'
+
+on:
+  schedule:
+    - cron: '37 12 * * *'
+
+jobs:
+  scan:
+    uses: 'trexx/actions/.github/workflows/trivy.yml@main'
+    secrets: 'inherit'
+    with:
+      image-name: '${{ github.repository }}'
+    permissions:
+      packages: 'read'
+      contents: 'write'
+      security-events: 'write'
+      actions: 'read'
