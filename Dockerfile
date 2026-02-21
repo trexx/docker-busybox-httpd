@@ -16,8 +16,7 @@ RUN adduser -D static
 # Download catatonit
 # renovate: datasource=github-releases depName=openSUSE/catatonit
 ENV CATATONIT_VERSION="v0.2.1"
-ADD https://github.com/openSUSE/catatonit/releases/download/${CATATONIT_VERSION}/catatonit.x86_64 /catatonit
-RUN chmod +x /catatonit
+ADD --chmod=+x https://github.com/openSUSE/catatonit/releases/download/${CATATONIT_VERSION}/catatonit.x86_64 /catatonit
 
 # Compile scratch image
 FROM scratch AS compile
