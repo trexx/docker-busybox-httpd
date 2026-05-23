@@ -1,6 +1,6 @@
 # Build Busybox
 FROM alpine:latest AS build-busybox
-ENV BUSYBOX_VERSION="1.37.0"
+ENV BUSYBOX_VERSION="1.38.0"
 
 RUN apk add gcc musl-dev make perl
 RUN wget https://busybox.net/downloads/busybox-${BUSYBOX_VERSION}.tar.bz2 \
