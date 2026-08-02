@@ -1,5 +1,7 @@
 # Build Busybox
 FROM alpine:latest AS build-busybox
+
+# renovate: datasource=custom.busybox depName=busybox
 ENV BUSYBOX_VERSION="1.38.0"
 
 RUN apk add gcc musl-dev make perl

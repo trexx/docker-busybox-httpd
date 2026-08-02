@@ -13,11 +13,25 @@
   "customManagers": [
     {
       "customType": "regex",
-      "fileMatch": ["^Dockerfile$"],
+      "managerFilePatterns": ["/^Dockerfile$/"],
       "matchStrings": [
         "#\\s*renovate:\\s*datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\\sENV .*?_VERSION=\"(?<currentValue>.*)\"\\s"
       ],
       "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
+    }
+  ],
+  "customDatasources": {
+    "busybox": {
+      "defaultRegistryUrlTemplate": "https://busybox.net/downloads/",
+      "format": "html"
+    }
+  },
+  "packageRules": [
+    {
+      "matchDatasources": ["custom.busybox"],
+      "extractVersion": "^busybox-(?<version>\\d+\\.\\d+\\.\\d+)\\.tar\\.bz2$",
+      "sourceUrl": "https://git.busybox.net/busybox",
+      "automerge": false
     }
   ]
 }
