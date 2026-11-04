@@ -1,5 +1,5 @@
 # Build Busybox
-FROM alpine:latest AS build-busybox
+FROM alpine:3.24 AS build-busybox
 
 # renovate: datasource=custom.busybox depName=busybox
 ENV BUSYBOX_VERSION="1.38.0"
@@ -22,13 +22,14 @@ ADD --chmod=+x https://github.com/openSUSE/catatonit/releases/download/${CATATON
 
 # Compile scratch image
 FROM scratch AS compile
-LABEL org.opencontainers.image.source="https://github.com/trexx/docker-busybox-httpd"
 
 COPY --from=build-busybox /etc/passwd /etc/passwd
 COPY --from=build-busybox /busybox/_install/bin/busybox /
 COPY --from=build-busybox /catatonit /
 
-USER static
+# The "static" user created above (uid 1000), numeric so Kubernetes'
+# runAsNonRoot can verify it.
+USER 1000:1000
 WORKDIR /www
 
 ENTRYPOINT ["/catatonit", "--"]
